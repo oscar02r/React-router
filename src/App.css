@@ -1,3 +1,12 @@
 .navActive{
   color: violet;
 }
+
+.active{
+  color: red;
+}
+
+nav{
+  display: flex;
+  justify-content: space-around;
+}
