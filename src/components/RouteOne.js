@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, NavLink, Link} from 'react-router-dom'
+import { BrowserRouter, Route, NavLink, Link, useParams} from 'react-router-dom'
 import queryString from 'query-string'
 import '../App.css';
 
@@ -10,9 +10,14 @@ const Home = (props)=>{
   )
  
 }
+
+
 const Hola = ()=>( <h1>Hola mundo!</h1>)
 
-const Productos = (props)=>(
+const Productos = (props)=>{
+     
+ 
+   return(
  
   <div>
       <h1>Productos</h1> 
@@ -20,16 +25,18 @@ const Productos = (props)=>(
       <Link to='/productos/Gamer/1'> Gamer </Link>
   </div>
   )
+  }
 
-const Categoria = ({match})=>{
-  
+const Categoria = ({match}) => {
+   const {categoria, id} = useParams()
   return(
-  <h1>Categoria: { match.params.categoria}</h1>
+  <h1>Categoria: {/* match.params.categoria*/ categoria}  {id ? `ID:${id}` :''}</h1>
   )
 }
 
 const Ropa = ({location})=>{
       const {color, talla} = queryString.parse(location.search)
+      
       return(
         <div>
           <h1>Ropa</h1>
@@ -82,7 +89,11 @@ const Navigation = ()=>(
         </NavLink>
       </nav>
 )
-      
+
+
+
+
+
 
 
 export function AppRoute() {
@@ -92,7 +103,8 @@ export function AppRoute() {
       <Route path='/' exact component = {Home}/>
       <Route path='/hola' sensitive render = { Hola }/>
       <Route path='/productos' exact render={Productos}/>
-      <Route path='/productos/:categoria/:id?' exact render={Categoria}/>
+      <Route path='/productos/:categoria/:id?' exact component={Categoria}/>
+    
       <Route path='/ropa' render={Ropa}/>
    </BrowserRouter>
   )
